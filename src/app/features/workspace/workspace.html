@@ -1,11 +1,22 @@
 <main class="workspace">
-  <mat-tab-group>
-    <mat-tab label="GET Users">
+  <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedIndexChange)="selectedTabIndex = $event" animationDuration="0ms">
+
+   @for (request of activeRequests; track request; let i = $index) {
+    <mat-tab>
+      <ng-template mat-tab-label>
+        {{ request.name }}
+        <button mat-icon-button (click)="closeTab(i)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </ng-template>
+
       <div class="request-page">
-        <app-request-bar />
-        <app-config-tabs />
-        <app-response-section />
+        <app-request-bar [requestData]="request"></app-request-bar>
+        <app-config-tabs [requestData]="request"></app-config-tabs>
+        <app-response-section [requestData]="request"></app-response-section>
       </div>
     </mat-tab>
+  }
+
   </mat-tab-group>
 </main>

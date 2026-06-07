@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -7,4 +7,6 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './response-section.html',
   styleUrl: './response-section.css',
 })
-export class ResponseSection {}
+export class ResponseSection {
+  requestData = input<any>();
+}

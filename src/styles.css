@@ -37,4 +37,64 @@ body {
   background: #f5f9fb;
 }
 
+
+/* Fuerza el estilo a nivel global */
+.mat-mdc-tab-header {
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.mat-mdc-tab {
+  min-width: auto !important;
+  padding: 0 16px !important;
+  opacity: 0.6;
+}
+
+.mat-mdc-tab.mdc-tab--active {
+  opacity: 1 !important;
+  color: var(--primary-color) !important;
+}
+
+.mdc-tab-indicator__content--underline {
+  border-top-color: var(--primary-color) !important;
+  border-top-width: 2px !important;
+}
+
+.mat-mdc-tab-group .mat-mdc-tab-label-container .mat-mdc-tab.mdc-tab--active {
+    color: var(--primary-color) !important;
+}
+
+/* 1. Shrink the tabs and make them look like the screenshot */
+.mat-mdc-tab-header {
+  min-height: 40px !important; 
+}
+
+.mat-mdc-tab {
+  height: 40px !important;
+  min-width: 60px !important;
+  padding: 0 10px !important;
+}
+
+.mdc-tab__content {
+  padding: 0 !important;
+}
+
+/* 2. Fix the close button layout */
+.mat-icon-button {
+  width: 20px !important;
+  height: 20px !important;
+  margin-left: 6px !important;
+
+  .mat-icon {
+    font-size: 14px !important;
+    width: 14px !important;
+    height: 14px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+
+
+
 /* You can add global styles to this file, and also import other style files */
