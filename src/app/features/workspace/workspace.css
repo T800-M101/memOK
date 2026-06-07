@@ -18,8 +18,33 @@
   overflow-y: auto;
 }
 
+.close-btn {
+  background: transparent;
+  border: none;
+  padding: 10px;
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  opacity: var(--opacity-subtle);
+  transition: var(--transition-base);
+
+  &:hover {
+    opacity: var(--opacity-hover);
+    background: var(--border-color-light);
+  }
+}
+
+.close-btn:hover {
+  color: var(--color-danger);
+}
+
+
 /* Global Material Overrides */
-::ng-deep .mat-mdc-form-field-subscript-wrapper { display: none; }
-::ng-deep .mdc-text-field--outlined { border-radius: 16px !important; }
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
 
-
+::ng-deep .mdc-text-field--outlined {
+  border-radius: 16px !important;
+}

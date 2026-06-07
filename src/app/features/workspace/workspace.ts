@@ -14,7 +14,9 @@ import { ResponseSection } from './components/response-section/response-section'
 export class Workspace {
   activeRequests = [
     { name: 'GET Users', method: 'GET', url: '' },
-    { name: 'POST Login', method: 'POST', url: '' }
+    { name: 'POST Login', method: 'POST', url: '' },
+    { name: 'POST Login', method: 'POST', url: '' },
+   
   ];
 
   selectedTabIndex = 0;

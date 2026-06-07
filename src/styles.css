@@ -25,7 +25,6 @@
   /* Tipografía */
   --font-mono: 'JetBrains Mono', monospace;
 }
-
 html,
 body {
   height: 100%;
@@ -65,7 +64,7 @@ body {
 
 /* 1. Shrink the tabs and make them look like the screenshot */
 .mat-mdc-tab-header {
-  min-height: 40px !important; 
+  min-height: 40px !important;
 }
 
 .mat-mdc-tab {
