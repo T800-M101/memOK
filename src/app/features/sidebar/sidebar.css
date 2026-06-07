@@ -72,10 +72,21 @@
 }
 
 
-.get .method { color: var(--primary-color); }
-.post .method { color: var(--success-color); }
-.put .method { color: var(--warning-color); }
-.delete .method { color: var(--error-color); }
+.get .method {
+  color: var(--primary-color);
+}
+
+.post .method {
+  color: var(--success-color);
+}
+
+.put .method {
+  color: var(--warning-color);
+}
+
+.delete .method {
+  color: var(--error-color);
+}
 
 
 /* MODAL */
@@ -136,38 +147,38 @@
   }
 
   .modal-close-btn {
-  width: 38px;
-  height: 38px;
+    width: 38px;
+    height: 38px;
 
-  border: none;
-  border-radius: 12px;
+    border: none;
+    border-radius: 12px;
 
-  background: #f5f9fb;
-  color: #78909c;
+    background: #f5f9fb;
+    color: #78909c;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  cursor: pointer;
+    cursor: pointer;
 
-  transition: all 0.2s ease;
+    transition: all 0.2s ease;
 
-  i {
-    font-size: 0.9rem;
+    i {
+      font-size: 0.9rem;
+    }
+
+    &:hover {
+      background: rgba(0, 188, 212, 0.12);
+      color: var(--primary-color);
+
+      transform: rotate(90deg);
+    }
+
+    &:active {
+      transform: scale(0.96);
+    }
   }
-
-  &:hover {
-    background: rgba(0, 188, 212, 0.12);
-    color: var(--primary-color);
-
-    transform: rotate(90deg);
-  }
-
-  &:active {
-    transform: scale(0.96);
-  }
-}
 }
 
 /* =======================
@@ -175,7 +186,11 @@
 ======================= */
 
 .modal-body-custom {
-  padding: 1.5rem;
+    padding: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    gap: 15px;
 
   .form-label {
     font-size: 0.85rem;
@@ -189,14 +204,10 @@
 
 .collection-input {
   height: 54px;
-
   border-radius: 16px;
   border: 1px solid #dbe5ea;
-
-  padding: 0 1rem;
-
+  padding: 0 3rem;
   font-size: 1rem;
-
   transition: all 0.2s ease;
 
   &:focus {

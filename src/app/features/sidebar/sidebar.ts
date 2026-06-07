@@ -5,36 +5,64 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { RequestsService } from '../../core/services/requests-service';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, MatExpansionModule],
+  imports: [
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatExpansionModule
+  ],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
 })
 export class Sidebar {
+  private fb = inject(FormBuilder);
 
   requestsService = inject(RequestsService);
 
   isModalOpen = signal<boolean>(false);
 
-  collection = {
-    collectionId: '1234',
-    title: 'Users',
-    requests: [],
-    isExpanded: true
+  collectionForm = this.fb.group({
+    title: ['', [Validators.required, Validators.minLength(2)]],
+  });
+
+  openModal(): void {
+    this.isModalOpen.set(true);
   }
 
- openModal(): void {
-  this.isModalOpen.set(true);
- }
-
- closeModal(): void {
-  this.isModalOpen.set(false);
- }
+  closeModal(): void {
+    this.isModalOpen.set(false);
+    this.collectionForm.reset();
+  }
 
   addCollection(): void {
-    this.requestsService.addCollection(this.collection);
-    this.isModalOpen.set(false);
+    if (this.collectionForm.invalid) {
+      this.collectionForm.markAllAsTouched();
+
+      return;
+    }
+
+    const title = this.collectionForm.value.title ?? '';
+
+    const collection = {
+      collectionId: crypto.randomUUID(),
+      title,
+      icon: "fas fa-folder",
+      requests: [],
+      isExpanded: true,
+    };
+
+    this.requestsService.addCollection(collection);
+
+    this.closeModal();
+  }
+
+  get title() {
+    return this.collectionForm.get('title');
   }
 }
