@@ -1,5 +1,5 @@
 <aside class="sidebar">
-  <button mat-flat-button class="new-request-btn">
+  <button mat-flat-button class="new-request-btn" (click)="openModal()">
     <mat-icon>add</mat-icon> New Collection
   </button>
 
@@ -24,3 +24,55 @@
     </mat-expansion-panel>
   </div>
 </aside>
+
+
+@if(isModalOpen()){
+<div class="modal-overlay">
+  <div class="modal-card">
+
+    <!-- Header -->
+    <div class="modal-header-custom">
+      <h5 class="mb-0">
+        <i class="fas fa-folder-plus me-2"></i>
+        Add Collection
+      </h5>
+
+    <button
+      type="button"
+      class="modal-close-btn"
+      aria-label="Close" (click)="closeModal()">
+      <i class="fas fa-times"></i>
+    </button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body-custom">
+
+      <label class="form-label">
+        Collection name
+      </label>
+
+      <input type="text" class="form-control collection-input" placeholder="e.g. Users API" />
+
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer-custom">
+
+      <button class="btn btn-light cancel-btn">
+        Cancel
+      </button>
+
+      <button class="btn create-btn" (click)="addCollection()">
+
+        <i class="fas fa-plus me-2"></i>
+        Create Collection
+
+      </button>
+
+    </div>
+
+  </div>
+</div>
+}
+
