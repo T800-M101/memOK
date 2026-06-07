@@ -1,0 +1,29 @@
+:host {
+  display: block;
+  margin-bottom: 24px;
+}
+
+.request-bar {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.method-field { width: 140px; }
+.url-field { flex: 1; }
+
+.send-btn {
+  height: 56px;
+  min-width: 130px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  background: var(--primary-color) !important; 
+  color: white !important;
+  font-size: 15px;
+}
+
+@media (max-width: 768px) {
+  .request-bar { flex-direction: column; align-items: stretch; }
+  .method-field, .url-field { width: 100%; }
+  .send-btn { width: 100%; }
+}

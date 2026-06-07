@@ -1,0 +1,101 @@
+:host {
+  display: flex;
+  height: 100%;
+}
+
+.sidebar {
+  flex: 1;
+  height: 100%;
+  width: 310px;
+  min-width: 310px;
+  background: var(--bg-card);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.new-request-btn {
+  width: 100%;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  background: var(--primary-color) !important;
+  color: white !important;
+}
+
+.search-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.collections {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.collection-title {
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.request-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.request-item {
+  justify-content: flex-start;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  transition: 0.2s ease;
+  padding-inline: 12px !important;
+
+  &:hover {
+    background: #edfafd;
+  }
+
+  .method {
+    min-width: 72px;
+    font-weight: 700;
+    font-size: 13px;
+  }
+}
+
+
+.get .method { color: var(--primary-color); }
+.post .method { color: var(--success-color); }
+.put .method { color: var(--warning-color); }
+.delete .method { color: var(--error-color); }
+
+::ng-deep .mat-expansion-panel {
+  border-radius: var(--radius-md) !important;
+  box-shadow: none !important;
+  border: 1px solid var(--border-light);
+}
+
+@media (max-width: 980px) {
+  .sidebar {
+    width: 260px;
+    min-width: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+}

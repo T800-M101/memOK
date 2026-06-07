@@ -1,0 +1,44 @@
+:host {
+  display: block;
+}
+
+.response-section {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.response-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.response-meta {
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.response-body {
+  padding: 24px;
+  background: var(--bg-secondary);
+  max-height: 450px;
+  overflow: auto;
+
+  pre {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+}
+
+@media (max-width: 768px) {
+  .response-meta { flex-direction: column; gap: 8px; }
+  .response-header { align-items: flex-start; flex-direction: column; gap: 12px; }
+}

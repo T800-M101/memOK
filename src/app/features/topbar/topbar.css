@@ -1,0 +1,28 @@
+.topbar {
+  height: 64px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-hover),
+    var(--primary-color)
+  );
+  color: white;
+  padding-inline: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+
+  .logo-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 12px;
+  }
+
+  .logo-text {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+}
+
+.spacer {
+  flex: 1;
+}

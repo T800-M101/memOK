@@ -1,5 +1,31 @@
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
+:root {
+  /* Colores principales */
+  --primary-color: #00bcd4;
+  --primary-hover: #00acc1;
+  --success-color: #43a047;
+  --warning-color: #fb8c00;
+  --error-color: #e53935;
+
+  /* Colores de fondo y texto */
+  --bg-app: #f5f9fb;
+  --bg-card: #ffffff;
+  --bg-secondary: #fafcfd;
+  --text-main: #607d8b;
+  --text-muted: #78909c;
+
+  /* Bordes y Sombras */
+  --border-color: #e4ebef;
+  --border-light: #e7edf0;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+
+  /* Tipografía */
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
 html,
 body {
   height: 100%;

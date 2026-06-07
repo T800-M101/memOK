@@ -8,11 +8,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { Topbar } from './features/topbar/topbar';
+import { Sidebar } from './features/sidebar/sidebar';
+import { Workspace } from './features/workspace/workspace';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
+    Topbar,
+    Sidebar,
+    Workspace,
     CommonModule,
     MatToolbarModule,
     MatButtonModule,

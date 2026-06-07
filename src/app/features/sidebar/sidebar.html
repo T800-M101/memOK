@@ -1,0 +1,26 @@
+<aside class="sidebar">
+  <button mat-flat-button class="new-request-btn">
+    <mat-icon>add</mat-icon> New Collection
+  </button>
+
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search collections</mat-label>
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput />
+  </mat-form-field>
+
+  <div class="collections">
+    <div class="collection-title">Collections</div>
+    <mat-expansion-panel expanded>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Users API</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="request-list">
+        <button mat-button class="request-item get"><span class="method">GET</span></button>
+        <button mat-button class="request-item post"><span class="method">POST</span></button>
+        <button mat-button class="request-item put"><span class="method">PUT</span></button>
+        <button mat-button class="request-item delete"><span class="method">DELETE</span></button>
+      </div>
+    </mat-expansion-panel>
+  </div>
+</aside>
