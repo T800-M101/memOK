@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RequestsService } from '../../core/services/requests/requests-service';
+import { TabsService } from '../../core/services/tabs/tabs.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -22,6 +23,7 @@ import { RequestsService } from '../../core/services/requests/requests-service';
 })
 export class Sidebar {
   requestsService = inject(RequestsService);
+  tabsService = inject(TabsService);
 
   collections = this.requestsService.collections;
 
@@ -66,4 +68,11 @@ export class Sidebar {
   get title() {
     return this.collectionForm.get('title');
   }
+
+onSelectRequestFromSidebar(requestId: string) {
+  const request = this.requestsService.getRequestById(requestId);
+  if (request) {
+    this.tabsService.openTab(request);
+  }
+}
 }

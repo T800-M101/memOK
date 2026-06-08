@@ -121,4 +121,12 @@ export class RequestsService {
       )
       .subscribe();
   }
+
+  getRequestById(requestId: string): ApiRequest | undefined {
+  for (const col of this._collections()) {
+    const req = col.requests.find(r => r.requestId === requestId);
+    if (req) return req;
+  }
+  return undefined;
+}
 }

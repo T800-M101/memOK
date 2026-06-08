@@ -1,4 +1,4 @@
-import { Injectable, signal } from "@angular/core";
+import { computed, Injectable, signal } from "@angular/core";
 import { ApiRequest } from "../../interfaces/api-request.interfce";
 
 @Injectable({
@@ -12,6 +12,10 @@ export class TabsService {
   private readonly _selectedTabIndex = signal<number>(0);
 
   readonly selectedTabIndex = this._selectedTabIndex.asReadonly();
+
+  readonly activeRequest = computed(() => {
+    return this._tabs()[this._selectedTabIndex()];
+  });
 
   openTab(request: ApiRequest) {
     const exists = this._tabs().find(
@@ -72,4 +76,8 @@ export class TabsService {
     this._tabs.set([]);
     this._selectedTabIndex.set(0);
   }
+
+  findTabIndex(requestId: string): number {
+  return this._tabs().findIndex(t => t.requestId === requestId);
+}
 }

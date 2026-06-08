@@ -33,9 +33,13 @@
       <div class="request-list">
 
         @for ( request of collection.requests; track request.requestId ) {
-        <button mat-button class="request-item" [class.get]="request.method === 'GET'"
-          [class.post]="request.method === 'POST'" [class.put]="request.method === 'PUT'"
-          [class.delete]="request.method === 'DELETE'">
+        <button
+          mat-button class="request-item"
+          [class.get]="request.method === 'GET'"
+          [class.post]="request.method === 'POST'"
+          [class.put]="request.method === 'PUT'"
+          [class.delete]="request.method === 'DELETE'"
+          (click)="onSelectRequestFromSidebar(request.requestId)">
           <span class="method"> {{ request.method }} </span>
           {{ request.name }}
         </button>
