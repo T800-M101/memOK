@@ -46,12 +46,10 @@ export class Sidebar {
   addCollection(): void {
     if (this.collectionForm.invalid) {
       this.collectionForm.markAllAsTouched();
-
       return;
     }
 
     const title = this.collectionForm.value.title ?? '';
-
     const collection = {
       collectionId: crypto.randomUUID(),
       title,

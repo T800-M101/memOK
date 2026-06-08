@@ -36,5 +36,40 @@
       }
     ],
     "isExpanded": true
+  },
+  {
+    "collectionId": "3a53289a-9cf0-4b8c-9c16-4ee1081bca9e",
+    "title": "Dogs",
+    "icon": "fas fa-folder",
+    "requests": [],
+    "isExpanded": true
+  },
+  {
+    "collectionId": "021eac99-5f80-4184-b81d-d9b18990fe40",
+    "title": "sdadadadsad",
+    "icon": "fas fa-folder",
+    "requests": [],
+    "isExpanded": true
+  },
+  {
+    "collectionId": "21b3f9d5-b706-4fe9-808d-5d4e460688a9",
+    "title": "ddddddd",
+    "icon": "fas fa-folder",
+    "requests": [],
+    "isExpanded": true
+  },
+  {
+    "collectionId": "cc010892-fe27-44c5-a78a-97154bab5b3d",
+    "title": "xxxxxxx",
+    "icon": "fas fa-folder",
+    "requests": [],
+    "isExpanded": true
+  },
+  {
+    "collectionId": "3783f72e-4da3-4fed-b0c8-2d8321af2ee1",
+    "title": "eeeee",
+    "icon": "fas fa-folder",
+    "requests": [],
+    "isExpanded": true
   }
 ]

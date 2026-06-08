@@ -61,51 +61,58 @@
   </div>
 </aside>
 
+  @if (isModalOpen()) {
+      <div class="modal-overlay">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5>
+              <i class="fas fa-folder-plus"></i>
+              Add Collection
+            </h5>
+            <button type="button" class="close-btn" (click)="closeModal()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
 
-@if(isModalOpen()){
-<div class="modal-overlay">
-  <div class="modal-card">
+          <!-- Form -->
+          <form [formGroup]="collectionForm" (ngSubmit)="addCollection()">
+            <!-- Body -->
+            <div class="modal-body">
+              <div class="form-field">
+                <label>Collection name</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Users API"
+                  formControlName="title"
+                  [class.is-invalid]="title?.invalid && title?.touched" />
 
-    <!-- Header -->
-    <div class="modal-header-custom">
-      <h5 class="mb-0">
-        <i class="fas fa-folder-plus me-2"></i>
-        Add Collection
-      </h5>
+                @if (title?.invalid && title?.touched) {
+                  <small class="error-message">
+                    <i class="fas fa-exclamation-circle me-1"></i>
+                    Collection name is required
+                  </small>
+                }
+              </div>
+            </div>
 
-      <button type="button" class="modal-close-btn" aria-label="Close" (click)="closeModal()">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-
-    <!-- Form -->
-    <form [formGroup]="collectionForm" (ngSubmit)="addCollection()">
-
-      <!-- Body -->
-      <div class="modal-body-custom">
-        <label class="form-label">Collection name</label>
-        <input type="text" class="form-control collection-input" placeholder="e.g. Users API" formControlName="title" />
-
-        @if ( title?.invalid && title?.touched) {
-        <small class="text-danger">
-          Collection name is required
-        </small>
-        }
-
+            <!-- Footer -->
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn-cancel"
+                (click)="closeModal()">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn-create"
+                [disabled]="collectionForm.invalid"
+                (click)="addCollection()">
+                <i class="fas fa-plus"></i>
+                Create Collection
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-
-      <!-- Footer -->
-      <div class="modal-footer-custom">
-        <button type="button" class="btn btn-light cancel-btn" (click)="closeModal()">
-          Cancel
-        </button>
-
-        <button type="submit" class="btn create-btn" [disabled]="collectionForm.invalid">
-          <i class="fas fa-plus me-2"></i>
-          Create Collection
-        </button>
-      </div>
-    </form>
-  </div>
-</div>
-}
+    }

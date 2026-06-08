@@ -33,3 +33,41 @@
   </mat-tab-group>
 
 </main>
+
+
+@if (isSaveModalOpen()) {
+<div class="modal-overlay">
+  <div class="modal-content">
+    <h5 class="mb-3">Save Request</h5>
+
+    <div class="mb-3">
+      <label class="form-label small">Request Name</label>
+      <input [(ngModel)]="requestName" placeholder="Enter request name" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label small">Select Collection</label>
+      <select [(ngModel)]="selectedCollectionId" class="form-select">
+        <option value="" disabled>Select a collection</option>
+
+        @for (col of collections(); track col.collectionId) {
+        <option [value]="col.collectionId">{{ col.title }}</option>
+        }
+
+        <option value="new" class="text-primary fw-bold border-top mt-1">
+          + Create new collection
+        </option>
+      </select>
+
+      @if (selectedCollectionId() === 'new') {
+      <input [(ngModel)]="newCollectionTitle" placeholder="Name of the new collection" class="form-control mt-2" />
+      }
+    </div>
+
+    <div class="actions mt-3 d-flex justify-content-end">
+      <button (click)="closeModal()" class="btn btn-secondary btn-sm">Cancel</button>
+      <button (click)="confirmSave()" class="btn btn-primary btn-sm ms-2" [disabled]="isSaveDisabled()">Save</button>
+    </div>
+  </div>
+</div>
+}

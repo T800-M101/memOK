@@ -1,3 +1,5 @@
+
+
 :root {
   /* Primary */
   --primary-color: #00bcd4;
@@ -27,6 +29,7 @@
   --border-soft: #eef3f6;
   --border-input: #dbe5ea;
   --border-button: #dce5ea;
+  --border-modal: #dc3545;
 
   /* Radius */
   --radius-sm: 12px;
