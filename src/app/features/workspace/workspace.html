@@ -6,6 +6,9 @@
     @for ( request of activeRequests(); track request.requestId; let i = $index ) {
     <mat-tab>
       <ng-template mat-tab-label>
+        @if (isTabDirty(request)) {
+        <span class="dirty-dot"></span>
+        }
         <span class="tab-label"> {{ request.name }} </span>
         <button class="close-btn" (click)="closeTab(i); $event.stopPropagation()">
           <i class="fas fa-times"></i>
@@ -14,9 +17,9 @@
       </ng-template>
 
       <div class="request-page">
-        <app-request-bar [requestData]="request" (change)="onFieldChange(request.requestId)" />
-        <app-config-tabs [requestData]="request" (change)="onFieldChange(request.requestId)" />
-        <app-response-section [requestData]="request" (change)="onFieldChange(request.requestId)" />
+        <app-request-bar [requestData]="request" (change)="onFieldChange(request.requestId, $event)" />
+        <app-config-tabs [requestData]="request" />
+        <app-response-section [requestData]="request" />
       </div>
     </mat-tab>
     }

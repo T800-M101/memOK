@@ -71,4 +71,10 @@ export class TabsService {
   updateTabStatus(tabId: string, status: { isModified: boolean }) {
     this._tabs.update((tabs) => tabs.map((t) => (t.requestId === tabId ? { ...t, ...status } : t)));
   }
+
+  updateTabContent(tabId: string, changes: Partial<ApiRequest>) {
+  this._tabs.update(tabs =>
+    tabs.map(t => t.requestId === tabId ? { ...t, ...changes } : t)
+  );
+}
 }

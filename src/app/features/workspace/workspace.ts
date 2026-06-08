@@ -172,7 +172,6 @@ export class Workspace {
   }
 
   private saveRequestToCollection(request: ApiRequest, collectionId: string) {
-    // Check if the request already exists in the collection
     const collection = this.requestsService
       .collections()
       .find((col) => col.collectionId === collectionId);
@@ -183,46 +182,40 @@ export class Workspace {
       );
 
       if (existingRequestIndex !== -1) {
-        // Update existing request
         collection.requests[existingRequestIndex] = request;
       } else {
-        // Add new request
         collection.requests.push(request);
       }
 
-      // Update the collection in the service
       this.requestsService.updateCollection(collection);
     }
   }
 
-  isTabDirty(tab: ApiRequest): boolean {
-    /* If it doesn't have a collection, it's a "new" request.
-     We consider it "dirty" if it has been modified.*/
-    if (!tab.collectionId) {
-      return !!tab.isModified; // If it's true, it's dirty.
-    }
+isTabDirty(tab: ApiRequest): boolean {
+  const saved = this.requestsService.getRequestById(tab.requestId);
 
-    const saved = this.requestsService.getRequestById(tab.requestId);
-
-    // If it doesn't exist in the database or was marked as modified, it's dirty.
-    if (!saved || tab.isModified) return true;
-
-    // In-depth comparison
+  if (saved) {
     return this.hasDeepChanges(tab, saved);
   }
 
-  private hasDeepChanges(current: ApiRequest, saved: ApiRequest): boolean {
-    return (
-      current.name !== saved.name ||
-      current.method !== saved.method ||
-      current.url !== saved.url ||
-      JSON.stringify(current.body) !== JSON.stringify(saved.body) ||
-      JSON.stringify(current.headers) !== JSON.stringify(saved.headers) ||
-      JSON.stringify(current.params) !== JSON.stringify(saved.params)
-    );
-  }
+  const isDefault =
+    tab.url === '' &&
+    (tab.body === null || tab.body === '') &&
+    tab.name === 'New Request';
 
-  onFieldChange(tabId: string) {
-    this.tabsService.markAsModified(tabId);
+  return !isDefault;
+}
+
+ private hasDeepChanges(current: ApiRequest, saved: ApiRequest): boolean {
+  return current.name !== saved.name ||
+         current.url !== saved.url ||
+         current.method !== saved.method ||
+         JSON.stringify(current.body || null) !== JSON.stringify(saved.body || null) ||
+         JSON.stringify(current.headers || {}) !== JSON.stringify(saved.headers || {}) ||
+         JSON.stringify(current.params || {}) !== JSON.stringify(saved.params || {});
+}
+
+  onFieldChange(tabId: string, changes: Partial<ApiRequest>) {
+    this.tabsService.updateTabContent(tabId, changes);
   }
 }

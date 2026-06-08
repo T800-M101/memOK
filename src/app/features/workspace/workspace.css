@@ -12,6 +12,16 @@
   width: 100%;
 }
 
+.dirty-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px; 
+  flex-shrink: 0;
+}
+
 .request-page {
   padding: 1.5rem;
   height: 100%;

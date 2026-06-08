@@ -4,6 +4,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
+import { ApiRequest } from '../../../../core/interfaces/api-request.interface';
 
 @Component({
   selector: 'app-request-bar',
@@ -13,9 +14,10 @@ import { FormsModule } from '@angular/forms';
 })
 export class RequestBar {
   requestData = input<any>();
-  change = output<void>();
+  change = output<Partial<ApiRequest>>();
 
-  onInput(): void {
-    this.change.emit();
-  }
+ onUrlInput(event: Event): void {
+  const value = (event.target as HTMLInputElement).value;
+  this.change.emit({ url: value }); 
+}
 }
