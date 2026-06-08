@@ -58,6 +58,16 @@ export class TabsService {
     this._selectedTabIndex.set(index);
   }
 
+   updateTabName(tabId: string, newName: string) {
+    this._tabs.update(tabs =>
+      tabs.map(tab =>
+        tab.requestId === tabId
+          ? { ...tab, name: newName }
+          : tab
+      )
+    );
+  }
+
   clearTabs() {
     this._tabs.set([]);
     this._selectedTabIndex.set(0);

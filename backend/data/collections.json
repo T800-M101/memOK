@@ -69,7 +69,21 @@
     "collectionId": "3783f72e-4da3-4fed-b0c8-2d8321af2ee1",
     "title": "eeeee",
     "icon": "fas fa-folder",
-    "requests": [],
+    "requests": [
+      {
+        "requestId": "de481555-7d6d-4831-a888-edb67a95b89e",
+        "name": "New Renmnmmnmnquest",
+        "method": "GET",
+        "url": "",
+        "params": {},
+        "headers": {},
+        "body": null,
+        "auth": {
+          "type": "none"
+        },
+        "collectionId": "3783f72e-4da3-4fed-b0c8-2d8321af2ee1"
+      }
+    ],
     "isExpanded": true
   }
 ]

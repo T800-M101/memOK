@@ -18,9 +18,9 @@ import { RequestsService } from '../../core/services/requests/requests-service';
 export class Workspace {
   private requestsService = inject(RequestsService);
   private tabsService = inject(TabsService);
+  private pendingCloseIndex = signal<number | null>(null);
   activeRequests = this.tabsService.tabs;
   selectedTabIndex = this.tabsService.selectedTabIndex;
-
   isSaveModalOpen = signal(false);
   requestName = signal('');
   selectedCollectionId = signal<string>('');
@@ -29,19 +29,15 @@ export class Workspace {
   targetTabId = signal<string | null>(null);
   tabs = this.tabsService.tabs;
 
-
-    isSaveDisabled = computed(() => {
+  isSaveDisabled = computed(() => {
     const hasRequestName = this.requestName()?.trim().length > 0;
 
     if (this.collections().length > 0) {
-      // There are collections: you need a name and (selected collection or new collection with name)
       const hasCollectionSelected = this.selectedCollectionId() !== '';
-      const hasNewCollectionName = this.selectedCollectionId() === 'new'
-        ? this.newCollectionTitle()?.trim().length > 0
-        : true;
+      const hasNewCollectionName =
+        this.selectedCollectionId() === 'new' ? this.newCollectionTitle()?.trim().length > 0 : true;
       return !hasRequestName || !hasCollectionSelected || !hasNewCollectionName;
     } else {
-      // There are no collections: you need the request name and the new collection name
       const hasNewCollection = this.newCollectionTitle()?.trim().length > 0;
       return !hasRequestName || !hasNewCollection;
     }
@@ -55,9 +51,21 @@ export class Workspace {
     this.tabsService.setActiveTab(index);
   }
 
-  closeTab(index: number) {
+  closeTab(index: number, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    const tab = this.activeRequests()[index];
+    if (!tab) return;
+
+    // Guardar el índice y el tabId para usar después
+    this.pendingCloseIndex.set(index);
+    this.targetTabId.set(tab.requestId);
+    this.requestName.set(tab.name);
+    this.selectedCollectionId.set('');
+    this.newCollectionTitle.set('');
     this.isSaveModalOpen.set(true);
-    //this.tabsService.closeTab(index);
   }
 
   createNewTab(event: Event) {
@@ -83,31 +91,106 @@ export class Workspace {
     });
   }
 
-   closeModal(): void {
+  closeModal(): void {
     this.isSaveModalOpen.set(false);
     this.requestName.set('');
     this.newCollectionTitle.set('');
     this.selectedCollectionId.set('');
   }
 
-   confirmSave() {
+  confirmSave() {
     const tabId = this.targetTabId();
-    // const tab = this.getTab(tabId!);
-    // if (!tab) return;
+    const pendingIndex = this.pendingCloseIndex();
 
-    let collectionId = this.selectedCollectionId();
-    if (collectionId === 'new') {
-      collectionId = crypto.randomUUID();
+    console.log('TABID', tabId);
+    console.log('Pending Index', pendingIndex);
+
+    if (!tabId) {
+      console.error('No tabId found');
+      return;
+    }
+
+    // Find the tab that is being saved
+    const tabToSave = this.tabs().find((tab) => tab.requestId === tabId);
+    if (!tabToSave) {
+      console.error('Tab not found:', tabId);
+      return;
+    }
+
+    let finalCollectionId: string;
+    let collectionName: string | undefined;
+
+    // Determine if it is a new or existing collection
+    if (this.selectedCollectionId() === 'new' || this.collections().length === 0) {
+      // Case 1: Create a new collection
+      finalCollectionId = crypto.randomUUID();
+      collectionName = this.newCollectionTitle()?.trim() || 'New Collection';
+
+      // Create the new collection
       this.requestsService.addCollection({
-        collectionId,
-        title: this.newCollectionTitle() || 'New Collection',
+        collectionId: finalCollectionId,
+        title: collectionName,
         icon: 'fas fa-folder',
         requests: [],
         isExpanded: true,
       });
+    } else {
+      // Case 2: Use existing collection
+      finalCollectionId = this.selectedCollectionId();
+      const existingCollection = this.collections().find(
+        (col) => col.collectionId === finalCollectionId,
+      );
+      collectionName = existingCollection?.title;
     }
 
-    //this.requestsService.saveOrUpdateRequest(tabId!, this.requestName(), collectionId);
-    this.closeModal();
+    // Update or create the request
+    const updatedRequest: ApiRequest = {
+      ...tabToSave,
+      name: this.requestName()?.trim() || tabToSave.name,
+      collectionId: finalCollectionId,
+    };
+
+    // Save the request in the collection
+    this.saveRequestToCollection(updatedRequest, finalCollectionId);
+
+    // Update the tab name
+    this.tabsService.updateTabName(tabId, updatedRequest.name);
+
+    // Close the tab if it was pending closure.
+    if (pendingIndex !== null) {
+      this.tabsService.closeTab(pendingIndex);
+    }
+
+    // Clear and close modal
+    this.targetTabId.set(null);
+    this.pendingCloseIndex.set(null);
+    this.isSaveModalOpen.set(false);
+    this.requestName.set('');
+    this.newCollectionTitle.set('');
+    this.selectedCollectionId.set('');
+  }
+
+  private saveRequestToCollection(request: ApiRequest, collectionId: string) {
+    // Check if the request already exists in the collection
+    const collection = this.requestsService
+      .collections()
+      .find((col) => col.collectionId === collectionId);
+
+    if (collection) {
+      const existingRequestIndex = collection.requests.findIndex(
+        (req) => req.requestId === request.requestId,
+      );
+
+      if (existingRequestIndex !== -1) {
+        // Update existing request
+        collection.requests[existingRequestIndex] = request;
+      } else {
+        // Add new request
+        collection.requests.push(request);
+      }
+
+      // Update the collection in the service
+      this.requestsService.updateCollection(collection);
+    }
   }
 }

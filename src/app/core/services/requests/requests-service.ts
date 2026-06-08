@@ -4,6 +4,7 @@ import { catchError, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ApiCollection } from '../../interfaces/api-collection.interface';
 import { environment } from '../../../../environments/environment';
+import { ApiRequest } from '../../interfaces/api-request.interfce';
 
 @Injectable({
   providedIn: 'root',
@@ -12,21 +13,16 @@ export class RequestsService {
   private readonly _collections = signal<ApiCollection[]>([]);
   readonly collections = this._collections.asReadonly();
 
-  constructor(private readonly http: HttpClient){
+  constructor(private readonly http: HttpClient) {
     this.loadCollections();
   }
 
-    private loadCollections(): void {
+  private loadCollections(): void {
     this.http
-      .get<ApiCollection[]>(
-        `${environment.apiUrl}/collections`,
-      )
+      .get<ApiCollection[]>(`${environment.apiUrl}/collections`)
       .pipe(
         catchError((err) => {
-          console.error(
-            'Error loading collections:',
-            err,
-          );
+          console.error('Error loading collections:', err);
 
           return of([]);
         }),
@@ -43,23 +39,50 @@ export class RequestsService {
 
   removeCollection(collectionId: string): void {
     this._collections.update((cols) => cols.filter((c) => c.collectionId !== collectionId));
-
     this.syncToServer();
   }
 
-  updateCollection(collectionId: string, updates: Partial<ApiCollection>): void {
+  updateCollection(updatedCollection: ApiCollection): void {
     this._collections.update((cols) =>
-      cols.map((collection) =>
-        collection.collectionId === collectionId
-          ? {
-              ...collection,
-              ...updates,
-            }
-          : collection,
+      cols.map((col) =>
+        col.collectionId === updatedCollection.collectionId ? updatedCollection : col,
       ),
     );
-
     this.syncToServer();
+  }
+
+  getCollectionById(collectionId: string): ApiCollection | undefined {
+    return this._collections().find((col) => col.collectionId === collectionId);
+  }
+
+  addRequestToCollection(collectionId: string, request: ApiRequest) {
+    this._collections.update((cols) =>
+      cols.map((col) => {
+        if (col.collectionId === collectionId) {
+          return {
+            ...col,
+            requests: [...col.requests, request],
+          };
+        }
+        return col;
+      }),
+    );
+  }
+
+  updateRequestInCollection(collectionId: string, updatedRequest: ApiRequest) {
+    this._collections.update((cols) =>
+      cols.map((col) => {
+        if (col.collectionId === collectionId) {
+          return {
+            ...col,
+            requests: col.requests.map((req) =>
+              req.requestId === updatedRequest.requestId ? updatedRequest : req,
+            ),
+          };
+        }
+        return col;
+      }),
+    );
   }
 
   toggleCollection(collectionId: string): void {
