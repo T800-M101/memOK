@@ -39,6 +39,30 @@
   color: var(--color-danger);
 }
 
+.add-tab-btn {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(0, 188, 212, 0.12);
+    color: var(--primary-color);
+    transform: scale(1.05);
+  }
+
+  i {
+    font-size: 0.9rem;
+  }
+}
+
 
 /* Global Material Overrides */
 ::ng-deep .mat-mdc-form-field-subscript-wrapper {
