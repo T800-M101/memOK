@@ -3,7 +3,38 @@
     "collectionId": "ad024396-242f-4fe8-a0ce-9c610d53bf02",
     "title": "Users",
     "icon": "fas fa-folder",
-    "requests": [],
+    "requests": [
+      {
+        "requestId": "7d7f97b1-fc89-4d58-8e6a-3a48d65b19d0",
+        "method": "GET",
+        "name": "Get Users",
+        "url": "https://jsonplaceholder.typicode.com/users",
+        "params": {},
+        "headers": {
+          "Accept": "application/json"
+        },
+        "body": null,
+        "auth": {
+          "type": "none"
+        }
+      },
+      {
+        "requestId": "b31f1df7-5b3d-4b5f-8d1d-95d80f20f111",
+        "method": "POST",
+        "name": "Create User",
+        "url": "https://jsonplaceholder.typicode.com/users",
+        "params": {},
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "name": "Memo"
+        },
+        "auth": {
+          "type": "none"
+        }
+      }
+    ],
     "isExpanded": true
   }
 ]

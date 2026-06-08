@@ -1,9 +1,9 @@
 import { Injectable, signal } from '@angular/core';
-import { ApiCollection } from '../interfaces/api-collection.interface';
 import { catchError, of } from 'rxjs';
 
-import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { ApiCollection } from '../../interfaces/api-collection.interface';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

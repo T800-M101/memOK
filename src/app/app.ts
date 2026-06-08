@@ -11,7 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Topbar } from './features/topbar/topbar';
 import { Sidebar } from './features/sidebar/sidebar';
 import { Workspace } from './features/workspace/workspace';
-import { RequestsService } from './core/services/requests-service';
+import { RequestsService } from './core/services/requests/requests-service';
 
 @Component({
   selector: 'app-root',

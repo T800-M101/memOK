@@ -1,7 +1,10 @@
 <main class="workspace">
-  <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedIndexChange)="selectedTabIndex = $event" animationDuration="0ms">
-
-   @for (request of activeRequests; track request; let i = $index) {
+<mat-tab-group
+  [selectedIndex]="selectedTabIndex()"
+  (selectedIndexChange)="setActiveTab($event)"
+  animationDuration="0ms"
+>
+   @for (request of activeRequests(); track request; let i = $index) {
     <mat-tab>
       <ng-template mat-tab-label>
         {{ request.name }}

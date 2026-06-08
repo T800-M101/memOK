@@ -1,9 +1,10 @@
 import { MatIconModule } from '@angular/material/icon';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RequestBar } from './components/request-bar/request-bar';
 import { ConfigTabs } from './components/config-tab/config-tabs';
 import { ResponseSection } from './components/response-section/response-section';
+import { TabsService } from '../../core/services/tabs/tabs.service';
 
 @Component({
   selector: 'app-worksapce',
@@ -12,18 +13,16 @@ import { ResponseSection } from './components/response-section/response-section'
   styleUrl: './workspace.css',
 })
 export class Workspace {
-  activeRequests = [
-    { name: 'GET Users', method: 'GET', url: '' },
-    { name: 'POST Login', method: 'POST', url: '' },
-    { name: 'POST Login', method: 'POST', url: '' },
+  private tabsService = inject(TabsService);
+  activeRequests = this.tabsService.tabs;
+   selectedTabIndex = this.tabsService.selectedTabIndex;
+
+   setActiveTab(index: number) {
+     this.tabsService.setActiveTab(index);
+   }
    
-  ];
-
-  selectedTabIndex = 0;
-
   closeTab(index: number) {
-    if (this.activeRequests.length > 1) {
-      this.activeRequests.splice(index, 1);
-    }
+    this.tabsService.closeTab(index);
   }
+
 }

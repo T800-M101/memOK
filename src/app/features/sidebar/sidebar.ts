@@ -4,8 +4,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { RequestsService } from '../../core/services/requests-service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RequestsService } from '../../core/services/requests/requests-service';
 
 @Component({
   selector: 'app-sidebar',
