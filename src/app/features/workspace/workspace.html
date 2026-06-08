@@ -14,9 +14,9 @@
       </ng-template>
 
       <div class="request-page">
-        <app-request-bar [requestData]="request" />
-        <app-config-tabs [requestData]="request" />
-        <app-response-section [requestData]="request" />
+        <app-request-bar [requestData]="request" (change)="onFieldChange(request.requestId)" />
+        <app-config-tabs [requestData]="request" (change)="onFieldChange(request.requestId)" />
+        <app-response-section [requestData]="request" (change)="onFieldChange(request.requestId)" />
       </div>
     </mat-tab>
     }

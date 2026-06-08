@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -7,16 +7,15 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-request-bar',
-  imports: [
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatButtonModule,
-    FormsModule
-  ],
+  imports: [MatFormFieldModule, MatSelectModule, MatInputModule, MatButtonModule, FormsModule],
   templateUrl: './request-bar.html',
   styleUrl: './request-bar.css',
 })
 export class RequestBar {
   requestData = input<any>();
+  change = output<void>();
+
+  onInput(): void {
+    this.change.emit();
+  }
 }

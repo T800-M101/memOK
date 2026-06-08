@@ -9,7 +9,7 @@
   </mat-form-field>
   <mat-form-field appearance="outline" class="url-field">
     <mat-label>Request URL</mat-label>
-    <input matInput placeholder="https://api.example.com/users" />
+    <input matInput placeholder="https://api.example.com/users" (input)="onInput()" />
   </mat-form-field>
   <button mat-flat-button class="send-btn">Send</button>
 </div>

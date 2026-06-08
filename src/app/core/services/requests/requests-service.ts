@@ -4,7 +4,7 @@ import { catchError, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ApiCollection } from '../../interfaces/api-collection.interface';
 import { environment } from '../../../../environments/environment';
-import { ApiRequest } from '../../interfaces/api-request.interfce';
+import { ApiRequest } from '../../interfaces/api-request.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -123,10 +123,10 @@ export class RequestsService {
   }
 
   getRequestById(requestId: string): ApiRequest | undefined {
-  for (const col of this._collections()) {
-    const req = col.requests.find(r => r.requestId === requestId);
-    if (req) return req;
+    for (const col of this._collections()) {
+      const req = col.requests.find((r) => r.requestId === requestId);
+      if (req) return req;
+    }
+    return undefined;
   }
-  return undefined;
-}
 }

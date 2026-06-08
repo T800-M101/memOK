@@ -13,4 +13,5 @@ export interface ApiRequest {
     type: 'bearer' | 'basic' | 'none';
     token?: string;
   };
+  isModified?: boolean;
 }

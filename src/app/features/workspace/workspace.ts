@@ -5,7 +5,7 @@ import { RequestBar } from './components/request-bar/request-bar';
 import { ConfigTabs } from './components/config-tab/config-tabs';
 import { ResponseSection } from './components/response-section/response-section';
 import { TabsService } from '../../core/services/tabs/tabs.service';
-import { ApiRequest } from '../../core/interfaces/api-request.interfce';
+import { ApiRequest } from '../../core/interfaces/api-request.interface';
 import { FormsModule } from '@angular/forms';
 import { RequestsService } from '../../core/services/requests/requests-service';
 
@@ -52,19 +52,22 @@ export class Workspace {
   }
 
   closeTab(index: number, event?: Event) {
-    if (event) {
-      event.stopPropagation();
-    }
+    if (event) event.stopPropagation();
 
     const tab = this.activeRequests()[index];
     if (!tab) return;
 
-    this.pendingCloseIndex.set(index);
-    this.targetTabId.set(tab.requestId);
-    this.requestName.set(tab.name);
-    this.selectedCollectionId.set('');
-    this.newCollectionTitle.set('');
-    this.isSaveModalOpen.set(true);
+    // We'll check if you have any pending changes.
+    if (this.isTabDirty(tab)) {
+      // If there are changes, we open the modal
+      this.pendingCloseIndex.set(index);
+      this.targetTabId.set(tab.requestId);
+      this.requestName.set(tab.name);
+      this.isSaveModalOpen.set(true);
+    } else {
+      // If there are no changes, we'll close directly without asking.
+      this.tabsService.closeTab(index);
+    }
   }
 
   createNewTab(event: Event) {
@@ -83,12 +86,11 @@ export class Workspace {
       },
     };
 
-   this.tabsService.openTab(newRequest);
+    this.tabsService.openTab(newRequest);
     setTimeout(() => {
       const newIndex = this.activeRequests.length - 1;
       this.setActiveTab(newIndex);
     });
-
   }
 
   closeModal(): void {
@@ -101,7 +103,7 @@ export class Workspace {
   confirmSave() {
     const tabId = this.targetTabId();
     const pendingIndex = this.pendingCloseIndex();
-    
+
     if (!tabId) {
       console.error('No tabId found');
       return;
@@ -165,6 +167,8 @@ export class Workspace {
     this.requestName.set('');
     this.newCollectionTitle.set('');
     this.selectedCollectionId.set('');
+
+    this.tabsService.updateTabStatus(tabId, { isModified: false });
   }
 
   private saveRequestToCollection(request: ApiRequest, collectionId: string) {
@@ -189,5 +193,36 @@ export class Workspace {
       // Update the collection in the service
       this.requestsService.updateCollection(collection);
     }
+  }
+
+  isTabDirty(tab: ApiRequest): boolean {
+    /* If it doesn't have a collection, it's a "new" request.
+     We consider it "dirty" if it has been modified.*/
+    if (!tab.collectionId) {
+      return !!tab.isModified; // If it's true, it's dirty.
+    }
+
+    const saved = this.requestsService.getRequestById(tab.requestId);
+
+    // If it doesn't exist in the database or was marked as modified, it's dirty.
+    if (!saved || tab.isModified) return true;
+
+    // In-depth comparison
+    return this.hasDeepChanges(tab, saved);
+  }
+
+  private hasDeepChanges(current: ApiRequest, saved: ApiRequest): boolean {
+    return (
+      current.name !== saved.name ||
+      current.method !== saved.method ||
+      current.url !== saved.url ||
+      JSON.stringify(current.body) !== JSON.stringify(saved.body) ||
+      JSON.stringify(current.headers) !== JSON.stringify(saved.headers) ||
+      JSON.stringify(current.params) !== JSON.stringify(saved.params)
+    );
+  }
+
+  onFieldChange(tabId: string) {
+    this.tabsService.markAsModified(tabId);
   }
 }

@@ -5,9 +5,9 @@
         <thead><tr><th>KEY</th><th>VALUE</th><th>DESCRIPTION</th></tr></thead>
         <tbody>
           <tr>
-            <td><input placeholder="page" /></td>
-            <td><input placeholder="1" /></td>
-            <td><input placeholder="Pagination" /></td>
+            <td><input placeholder="page" (input)="onInput()" /></td>
+            <td><input placeholder="1"  (input)="onInput()"/></td>
+            <td><input placeholder="Pagination" (input)="onInput()" /></td>
           </tr>
         </tbody>
       </table>
@@ -26,7 +26,7 @@
     <div class="tab-content">
       <mat-form-field appearance="outline" class="body-editor">
         <mat-label>JSON Body</mat-label>
-        <textarea matInput rows="12" placeholder="JSON body"></textarea>
+        <textarea matInput rows="12" placeholder="JSON body" (input)="onInput()" ></textarea>
       </mat-form-field>
     </div>
   </mat-tab>

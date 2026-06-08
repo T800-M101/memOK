@@ -1,4 +1,4 @@
-import { ApiRequest } from "./api-request.interfce";
+import { ApiRequest } from './api-request.interface';
 
 export interface ApiCollection {
   collectionId: string;

@@ -1,5 +1,5 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { ApiRequest } from '../../interfaces/api-request.interfce';
+import { ApiRequest } from '../../interfaces/api-request.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -60,5 +60,15 @@ export class TabsService {
 
   findTabIndex(requestId: string): number {
     return this._tabs().findIndex((t) => t.requestId === requestId);
+  }
+
+  markAsModified(tabId: string) {
+    this._tabs.update((tabs) =>
+      tabs.map((t) => (t.requestId === tabId ? { ...t, isModified: true } : t)),
+    );
+  }
+
+  updateTabStatus(tabId: string, status: { isModified: boolean }) {
+    this._tabs.update((tabs) => tabs.map((t) => (t.requestId === tabId ? { ...t, ...status } : t)));
   }
 }
