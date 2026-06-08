@@ -1,5 +1,5 @@
-import { computed, Injectable, signal } from "@angular/core";
-import { ApiRequest } from "../../interfaces/api-request.interfce";
+import { computed, Injectable, signal } from '@angular/core';
+import { ApiRequest } from '../../interfaces/api-request.interfce';
 
 @Injectable({
   providedIn: 'root',
@@ -18,43 +18,28 @@ export class TabsService {
   });
 
   openTab(request: ApiRequest) {
-    const exists = this._tabs().find(
-      (r) => r.requestId === request.requestId,
-    );
+    const exists = this._tabs().find((r) => r.requestId === request.requestId);
 
     if (exists) {
-      const index = this._tabs().findIndex(
-        (r) => r.requestId === request.requestId,
-      );
+      const index = this._tabs().findIndex((r) => r.requestId === request.requestId);
 
       this._selectedTabIndex.set(index);
 
       return;
     }
 
-    this._tabs.update((tabs) => [
-      ...tabs,
-      request,
-    ]);
+    this._tabs.update((tabs) => [...tabs, request]);
 
-    this._selectedTabIndex.set(
-      this._tabs().length - 1,
-    );
+    this._selectedTabIndex.set(this._tabs().length - 1);
   }
 
   closeTab(index: number) {
-    this._tabs.update((tabs) =>
-      tabs.filter((_, i) => i !== index),
-    );
+    this._tabs.update((tabs) => tabs.filter((_, i) => i !== index));
 
     const totalTabs = this._tabs().length;
 
-    if (
-      this._selectedTabIndex() >= totalTabs
-    ) {
-      this._selectedTabIndex.set(
-        Math.max(0, totalTabs - 1),
-      );
+    if (this._selectedTabIndex() >= totalTabs) {
+      this._selectedTabIndex.set(Math.max(0, totalTabs - 1));
     }
   }
 
@@ -62,13 +47,9 @@ export class TabsService {
     this._selectedTabIndex.set(index);
   }
 
-   updateTabName(tabId: string, newName: string) {
-    this._tabs.update(tabs =>
-      tabs.map(tab =>
-        tab.requestId === tabId
-          ? { ...tab, name: newName }
-          : tab
-      )
+  updateTabName(tabId: string, newName: string) {
+    this._tabs.update((tabs) =>
+      tabs.map((tab) => (tab.requestId === tabId ? { ...tab, name: newName } : tab)),
     );
   }
 
@@ -78,6 +59,6 @@ export class TabsService {
   }
 
   findTabIndex(requestId: string): number {
-  return this._tabs().findIndex(t => t.requestId === requestId);
-}
+    return this._tabs().findIndex((t) => t.requestId === requestId);
+  }
 }

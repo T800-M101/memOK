@@ -16,7 +16,7 @@ import { TabsService } from '../../core/services/tabs/tabs.service';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatExpansionModule
+    MatExpansionModule,
   ],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
@@ -28,7 +28,6 @@ export class Sidebar {
   collections = this.requestsService.collections;
 
   private fb = inject(FormBuilder);
-
 
   isModalOpen = signal<boolean>(false);
 
@@ -55,7 +54,7 @@ export class Sidebar {
     const collection = {
       collectionId: crypto.randomUUID(),
       title,
-      icon: "fas fa-folder",
+      icon: 'fas fa-folder',
       requests: [],
       isExpanded: true,
     };
@@ -69,10 +68,15 @@ export class Sidebar {
     return this.collectionForm.get('title');
   }
 
-onSelectRequestFromSidebar(requestId: string) {
-  const request = this.requestsService.getRequestById(requestId);
-  if (request) {
+  onSelectRequestFromSidebar(requestId: string) {
+    const request = this.requestsService.getRequestById(requestId);
+    if (!request) return;
+
     this.tabsService.openTab(request);
+
+    setTimeout(() => {
+      const newIndex = this.tabsService.tabs().length - 1;
+      this.tabsService.setActiveTab(newIndex);
+    });
   }
-}
 }

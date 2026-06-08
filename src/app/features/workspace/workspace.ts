@@ -59,7 +59,6 @@ export class Workspace {
     const tab = this.activeRequests()[index];
     if (!tab) return;
 
-    // Guardar el índice y el tabId para usar después
     this.pendingCloseIndex.set(index);
     this.targetTabId.set(tab.requestId);
     this.requestName.set(tab.name);
@@ -84,11 +83,12 @@ export class Workspace {
       },
     };
 
-    this.tabsService.openTab(newRequest);
+   this.tabsService.openTab(newRequest);
     setTimeout(() => {
       const newIndex = this.activeRequests.length - 1;
       this.setActiveTab(newIndex);
     });
+
   }
 
   closeModal(): void {
@@ -101,10 +101,7 @@ export class Workspace {
   confirmSave() {
     const tabId = this.targetTabId();
     const pendingIndex = this.pendingCloseIndex();
-
-    console.log('TABID', tabId);
-    console.log('Pending Index', pendingIndex);
-
+    
     if (!tabId) {
       console.error('No tabId found');
       return;
