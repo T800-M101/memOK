@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { ApiCollection } from '../interfaces/api-collection.interface';
 import { catchError, of } from 'rxjs';
 
@@ -9,17 +9,84 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class RequestsService {
-  http = inject(HttpClient);
-  collections = signal<ApiCollection[]>([]);
+  private readonly _collections = signal<ApiCollection[]>([]);
+  readonly collections = this._collections.asReadonly();
+
+  constructor(private readonly http: HttpClient){
+    this.loadCollections();
+  }
+
+    private loadCollections(): void {
+    this.http
+      .get<ApiCollection[]>(
+        `${environment.apiUrl}/collections`,
+      )
+      .pipe(
+        catchError((err) => {
+          console.error(
+            'Error loading collections:',
+            err,
+          );
+
+          return of([]);
+        }),
+      )
+      .subscribe((collections) => {
+        this._collections.set(collections);
+      });
+  }
 
   addCollection(collection: ApiCollection) {
-    this.collections.update((cols) => [...cols, collection]);
+    this._collections.update((cols) => [...cols, collection]);
+    this.syncToServer();
+  }
+
+  removeCollection(collectionId: string): void {
+    this._collections.update((cols) => cols.filter((c) => c.collectionId !== collectionId));
+
+    this.syncToServer();
+  }
+
+  updateCollection(collectionId: string, updates: Partial<ApiCollection>): void {
+    this._collections.update((cols) =>
+      cols.map((collection) =>
+        collection.collectionId === collectionId
+          ? {
+              ...collection,
+              ...updates,
+            }
+          : collection,
+      ),
+    );
+
+    this.syncToServer();
+  }
+
+  toggleCollection(collectionId: string): void {
+    this._collections.update((cols) =>
+      cols.map((collection) =>
+        collection.collectionId === collectionId
+          ? {
+              ...collection,
+              isExpanded: !collection.isExpanded,
+            }
+          : collection,
+      ),
+    );
+  }
+
+  setCollections(collections: ApiCollection[]): void {
+    this._collections.set(collections);
+  }
+
+  clearCollections(): void {
+    this._collections.set([]);
     this.syncToServer();
   }
 
   private syncToServer() {
-    const data = this.collections();
-    console.log(`${environment.apiUrl}/collections`)
+    const data = this._collections();
+    console.log(`${environment.apiUrl}/collections`);
 
     this.http
       .post(`${environment.apiUrl}/collections`, data)

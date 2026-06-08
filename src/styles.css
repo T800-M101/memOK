@@ -1,28 +1,47 @@
 :root {
-  /* Colores principales */
+  /* Primary */
   --primary-color: #00bcd4;
   --primary-hover: #00acc1;
+
+  /* Status */
   --success-color: #43a047;
   --warning-color: #fb8c00;
   --error-color: #e53935;
 
-  /* Colores de fondo y texto */
+  /* Backgrounds */
   --bg-app: #f5f9fb;
   --bg-card: #ffffff;
   --bg-secondary: #fafcfd;
+  --bg-hover: #edfafd;
+  --bg-soft: #f8fafb;
+
+  /* Text */
   --text-main: #607d8b;
   --text-muted: #78909c;
+  --text-placeholder: #9eacb5;
+  --text-white: #ffffff;
 
-  /* Bordes y Sombras */
+  /* Borders */
   --border-color: #e4ebef;
   --border-light: #e7edf0;
+  --border-soft: #eef3f6;
+  --border-input: #dbe5ea;
+  --border-button: #dce5ea;
+
+  /* Radius */
   --radius-sm: 12px;
   --radius-md: 16px;
   --radius-lg: 22px;
 
-  /* Tipografía */
+  /* Shadows */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --shadow-primary: 0 8px 20px rgba(0, 188, 212, 0.22);
+
+  /* Typography */
   --font-mono: 'JetBrains Mono', monospace;
 }
+
 html,
 body {
   height: 100%;

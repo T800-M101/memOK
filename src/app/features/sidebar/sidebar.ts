@@ -21,9 +21,12 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
   styleUrl: './sidebar.css',
 })
 export class Sidebar {
+  requestsService = inject(RequestsService);
+
+  collections = this.requestsService.collections;
+
   private fb = inject(FormBuilder);
 
-  requestsService = inject(RequestsService);
 
   isModalOpen = signal<boolean>(false);
 
