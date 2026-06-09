@@ -1,9 +1,24 @@
 <section class="response-section">
   <div class="response-header">
     <div class="response-meta">
-      <span>Status: 200 OK</span><span>Time: 120ms</span><span>Size: 1.2KB</span>
+      @if (response(); as resp) {
+      <span>Status: {{ resp.status }} {{ resp.statusText }}</span>
+      <span>Time: {{ resp.duration }}</span>
+      <span>Size: {{ getBodySize() }}</span>
+      } @else {
+      <span>Status: —</span>
+      <span>Time: —</span>
+      <span>Size: —</span>
+      }
     </div>
-    <button mat-button>Save Response</button>
+
   </div>
-  <div class="response-body"><pre>No response yet</pre></div>
+
+  <div class="response-body">
+    @if (response() && response()?.body; as body) {
+    <ngx-json-viewer [json]="body"></ngx-json-viewer>
+    } @else {
+    <pre>No response yet</pre>
+    }
+  </div>
 </section>

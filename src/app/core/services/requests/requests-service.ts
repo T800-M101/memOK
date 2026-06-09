@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiCollection } from '../../interfaces/api-collection.interface';
 import { environment } from '../../../../environments/environment';
 import { ApiRequest } from '../../interfaces/api-request.interface';
+import { ProxyResponse } from '../../interfaces/proxy-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,9 @@ import { ApiRequest } from '../../interfaces/api-request.interface';
 export class RequestsService {
   private readonly _collections = signal<ApiCollection[]>([]);
   readonly collections = this._collections.asReadonly();
+
+  private readonly _response = signal<ProxyResponse | null>(null);
+  readonly response = this._response.asReadonly();
 
   constructor(private readonly http: HttpClient) {
     this.loadCollections();
@@ -134,7 +138,7 @@ export class RequestsService {
     url: string;
     headers?: Record<string, string>;
     body?: any;
-  }): Promise<any> {
+  }): Promise<unknown> {
     if (!payload.url) {
       throw new Error('Request URL is required');
     }
@@ -154,11 +158,16 @@ export class RequestsService {
       });
 
       const response = await lastValueFrom(this.http.post(proxyUrl, proxyPayload, { headers }));
+      this._response.set(response as ProxyResponse);
 
       return response;
     } catch (error) {
       console.error('Error en sendRequest:', error);
       throw error;
     }
+  }
+
+  clearResponse(): void {
+    this._response.set(null);
   }
 }

@@ -64,9 +64,11 @@ export class Workspace {
       this.targetTabId.set(tab.requestId);
       this.requestName.set(tab.name);
       this.isSaveModalOpen.set(true);
+      this.requestsService.clearResponse();
     } else {
       // If there are no changes, we'll close directly without asking.
       this.tabsService.closeTab(index);
+      this.requestsService.clearResponse();
     }
   }
 

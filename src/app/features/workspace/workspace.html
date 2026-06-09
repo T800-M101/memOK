@@ -19,7 +19,7 @@
       <div class="request-page">
         <app-request-bar [requestData]="request" (change)="onFieldChange(request.requestId, $event)" />
         <app-config-tabs [requestData]="request" (change)="onFieldChange(request.requestId, $event)" />
-        <app-response-section [requestData]="request" />
+        <app-response-section />
       </div>
     </mat-tab>
     }
