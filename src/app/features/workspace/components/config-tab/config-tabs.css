@@ -1,52 +1,207 @@
 :host {
   display: block;
-  margin-bottom: 24px;
+  height: 100%;
 }
 
-.tab-content {
-  background: var(--bg-card);
-  border-radius: var(--radius-md);
-  padding: 1rem;
-  border: 1px solid var(--border-light);
-}
+.request-config-tabs {
+  height: 100%;
 
-.params-table {
-  width: 100%;
-  border-collapse: collapse;
-
-  th {
-    text-align: left;
-    padding: 14px;
-    font-size: 12px;
-    color: var(--text-muted);
-    border-bottom: 1px solid var(--border-color);
+  ::ng-deep .mat-mdc-tab-body-content {
+    overflow: visible !important;
   }
 
-  td {
-    padding: 12px;
-    border-bottom: 1px solid var(--border-color);
+  .tab-content {
+    padding: 1.5rem;
+    height: calc(100% - 48px);
+    overflow-y: auto;
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
   }
 
-  input {
-    width: 100%;
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    h6 {
+      margin: 0;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  .add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%);
+    color: white;
     border: none;
-    outline: none;
-    background: transparent;
-    font-size: 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    i {
+      font-size: 0.8rem;
+    }
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
   }
-}
 
-.body-editor {
-  width: 100%;
-}
+  .table-container {
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    overflow: auto;
+  }
 
-textarea {
-  font-family: var(--font-mono);
-  resize: vertical;
-  line-height: 1.6;
-}
+  .params-table {
+    width: 100%;
+    border-collapse: collapse;
 
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-soft);
+    }
 
-::ng-deep .mat-mdc-tab-body-content {
-  overflow: visible !important;
+    th {
+      background: var(--bg-soft);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      background: var(--bg-card);
+    }
+
+    input {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border-input);
+      border-radius: 6px;
+      background: var(--bg-app);
+      color: var(--text-main);
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+
+      &:focus {
+        outline: none;
+        border-color: #00bcd4;
+        box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.1);
+      }
+
+      &::placeholder {
+        color: var(--text-placeholder);
+      }
+    }
+
+    .action-col {
+      width: 50px;
+    }
+
+    .action-cell {
+      text-align: center;
+    }
+
+    .remove-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+
+      i {
+        font-size: 0.9rem;
+      }
+
+      &:hover {
+        background: rgba(220, 53, 69, 0.1);
+        color: #dc3545;
+      }
+    }
+  }
+
+  .params-form,
+  .headers-form {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    text-align: center;
+
+    i {
+      font-size: 3rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .add-empty-btn {
+      padding: 0.5rem 1.5rem;
+      background: transparent;
+      border: 1px dashed var(--border-color);
+      border-radius: 8px;
+      color: var(--primary-color);
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: rgba(0, 188, 212, 0.05);
+        border-color: var(--primary-color);
+      }
+    }
+  }
+
+  .auth-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+
+    .url-field {
+      width: 100%;
+      max-width: 500px;
+    }
+  }
+
+  .body-editor {
+    width: 100%;
+
+    textarea {
+      font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+      font-size: 0.875rem;
+      resize: vertical;
+      line-height: 1.6;
+    }
+  }
 }
