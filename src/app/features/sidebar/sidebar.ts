@@ -19,7 +19,7 @@ import { TabsService } from '../../core/services/tabs/tabs.service';
     MatExpansionModule,
   ],
   templateUrl: './sidebar.html',
-  styleUrl: './sidebar.css',
+  styleUrls: ['./sidebar.scss'],
 })
 export class Sidebar {
   requestsService = inject(RequestsService);

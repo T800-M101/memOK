@@ -7,6 +7,6 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-topbar',
   imports: [MatToolbarModule, MatButtonModule, MatIconModule],
   templateUrl: './topbar.html',
-  styleUrl: './topbar.css',
+  styleUrls: ['./topbar.scss'],
 })
 export class Topbar {}

@@ -2,14 +2,20 @@ import { Component, inject, input, output } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { ApiRequest } from '../../../../core/interfaces/api-request.interface';
 
 @Component({
   selector: 'app-config-tabs',
   imports: [MatTabsModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule],
   templateUrl: './config-tabs.html',
-  styleUrl: './config-tabs.css',
+  styleUrls: ['./config-tabs.scss'],
 })
 export class ConfigTabs {
   private fb = inject(FormBuilder);
@@ -22,11 +28,11 @@ export class ConfigTabs {
 
   constructor() {
     this.paramsForm = this.fb.group({
-      params: this.fb.array([])
+      params: this.fb.array([]),
     });
 
     this.headersForm = this.fb.group({
-      headers: this.fb.array([])
+      headers: this.fb.array([]),
     });
   }
 
@@ -65,7 +71,7 @@ export class ConfigTabs {
     const headerKeys = Object.keys(existingHeaders);
 
     // Filtrar Authorization porque se maneja en el tab de Auth
-    const filteredHeaders = headerKeys.filter(key => key !== 'Authorization');
+    const filteredHeaders = headerKeys.filter((key) => key !== 'Authorization');
 
     if (filteredHeaders.length > 0) {
       for (const key of filteredHeaders) {
@@ -90,14 +96,14 @@ export class ConfigTabs {
     return this.fb.group({
       key: [key],
       value: [value],
-      description: [description]
+      description: [description],
     });
   }
 
   createHeaderGroup(key: string = '', value: string = ''): FormGroup {
     return this.fb.group({
       key: [key],
-      value: [value]
+      value: [value],
     });
   }
 
@@ -121,7 +127,7 @@ export class ConfigTabs {
     const validParams: Record<string, string> = {};
     let hasValidParams = false;
 
-    this.paramsArray.controls.forEach(group => {
+    this.paramsArray.controls.forEach((group) => {
       const key = group.get('key')?.value?.trim();
       const value = group.get('value')?.value?.trim();
 
@@ -132,7 +138,7 @@ export class ConfigTabs {
     });
 
     this.change.emit({
-      params: hasValidParams ? validParams : null
+      params: hasValidParams ? validParams : null,
     });
   }
 
@@ -140,7 +146,7 @@ export class ConfigTabs {
     const validHeaders: Record<string, string> = {};
     let hasValidHeaders = false;
 
-    this.headersArray.controls.forEach(group => {
+    this.headersArray.controls.forEach((group) => {
       const key = group.get('key')?.value?.trim();
       const value = group.get('value')?.value?.trim();
 
@@ -151,7 +157,7 @@ export class ConfigTabs {
     });
 
     this.change.emit({
-      headers: hasValidHeaders ? validHeaders : null
+      headers: hasValidHeaders ? validHeaders : null,
     });
   }
 

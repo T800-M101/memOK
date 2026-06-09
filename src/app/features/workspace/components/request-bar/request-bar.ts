@@ -18,7 +18,7 @@ import { RequestsService } from '../../../../core/services/requests/requests-ser
     ReactiveFormsModule,
   ],
   templateUrl: './request-bar.html',
-  styleUrl: './request-bar.css',
+  styleUrls: ['./request-bar.scss'],
 })
 export class RequestBar {
   private fb = inject(FormBuilder);

@@ -31,7 +31,7 @@ import { RequestsService } from './core/services/requests/requests-service';
     MatExpansionModule,
   ],
   templateUrl: './app.html',
-  styleUrls: ['./app.css'],
+  styleUrls: ['./app.scss'],
 })
 export class App {
   requestsService = inject(RequestsService);

@@ -13,7 +13,7 @@ import { RequestsService } from '../../core/services/requests/requests-service';
   selector: 'app-worksapce',
   imports: [MatTabsModule, MatIconModule, RequestBar, ConfigTabs, ResponseSection, FormsModule],
   templateUrl: './workspace.html',
-  styleUrl: './workspace.css',
+  styleUrls: ['./workspace.scss'],
 })
 export class Workspace {
   private requestsService = inject(RequestsService);

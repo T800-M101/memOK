@@ -7,13 +7,13 @@ import { RequestsService } from '../../../../core/services/requests/requests-ser
   selector: 'app-response-section',
   imports: [MatButtonModule, NgxJsonViewerModule],
   templateUrl: './response-section.html',
-  styleUrl: './response-section.css',
+  styleUrls: ['./response-section.scss'],
 })
 export class ResponseSection {
   private requestsService = inject(RequestsService);
   readonly response = this.requestsService.response;
-  
-   getBodySize(): string {
+
+  getBodySize(): string {
     const resp = this.response();
     if (!resp?.body) return '0 B';
 
@@ -24,5 +24,4 @@ export class ResponseSection {
     if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
     return `${(size / (1024 * 1024)).toFixed(1)} MB`;
   }
-
 }
