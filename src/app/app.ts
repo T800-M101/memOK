@@ -35,5 +35,5 @@ import { RequestsService } from './core/services/requests/requests-service';
 })
 export class App {
   requestsService = inject(RequestsService);
-  protected readonly title = signal('test');
+  protected readonly title = signal('memOK');
 }
