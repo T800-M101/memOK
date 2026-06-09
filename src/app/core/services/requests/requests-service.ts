@@ -1,7 +1,6 @@
 import { Injectable, signal } from '@angular/core';
-import { catchError, of } from 'rxjs';
-
-import { HttpClient } from '@angular/common/http';
+import { catchError, lastValueFrom, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiCollection } from '../../interfaces/api-collection.interface';
 import { environment } from '../../../../environments/environment';
 import { ApiRequest } from '../../interfaces/api-request.interface';
@@ -128,5 +127,38 @@ export class RequestsService {
       if (req) return req;
     }
     return undefined;
+  }
+
+  async sendRequest(payload: {
+    method: string;
+    url: string;
+    headers?: Record<string, string>;
+    body?: any;
+  }): Promise<any> {
+    if (!payload.url) {
+      throw new Error('Request URL is required');
+    }
+
+    try {
+      const backendBase = environment.apiUrl.replace(/\/api$/, '');
+      const proxyUrl = `${backendBase}/proxy?url=${encodeURIComponent(payload.url)}`;
+
+      const proxyPayload = {
+        method: payload.method,
+        headers: payload.headers || {},
+        body: payload.body || null,
+      };
+
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+      });
+
+      const response = await lastValueFrom(this.http.post(proxyUrl, proxyPayload, { headers }));
+
+      return response;
+    } catch (error) {
+      console.error('Error en sendRequest:', error);
+      throw error;
+    }
   }
 }
