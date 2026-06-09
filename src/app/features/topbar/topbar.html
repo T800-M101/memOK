@@ -1,5 +1,5 @@
 <mat-toolbar class="topbar">
-  <button mat-icon-button>
+  <button mat-icon-button  (click)="toggleMenu()" aria-label="Open lateral menu">
     <mat-icon>menu</mat-icon>
   </button>
 
@@ -20,3 +20,11 @@
     <mat-icon>person</mat-icon>
   </button>
 </mat-toolbar>
+
+<div class="lateral-menu" [class.open]="isMenuOpen()">
+  <div class="menu-content">
+    <button mat-flat-button class="import-curl-btn" (click)="importCurl()">Import cURL</button>
+  </div>
+</div>
+
+<div class="menu-backdrop" *ngIf="isMenuOpen()" (click)="closeMenu()"></div>
