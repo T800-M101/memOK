@@ -191,29 +191,33 @@ export class Workspace {
     }
   }
 
-isTabDirty(tab: ApiRequest): boolean {
-  const saved = this.requestsService.getRequestById(tab.requestId);
+  isTabDirty(tab: ApiRequest): boolean {
+    const saved = this.requestsService.getRequestById(tab.requestId);
 
-  if (saved) {
-    return this.hasDeepChanges(tab, saved);
+    if (saved) {
+      return this.hasDeepChanges(tab, saved);
+    }
+
+    const isDefault =
+      tab.url === '' &&
+      (tab.body === null || tab.body === '') &&
+      tab.name === 'New Request' &&
+      Object.keys(tab.params || {}).length === 0 &&
+      Object.keys(tab.headers || {}).length === 0;
+
+    return !isDefault;
   }
 
-  const isDefault =
-    tab.url === '' &&
-    (tab.body === null || tab.body === '') &&
-    tab.name === 'New Request';
-
-  return !isDefault;
-}
-
- private hasDeepChanges(current: ApiRequest, saved: ApiRequest): boolean {
-  return current.name !== saved.name ||
-         current.url !== saved.url ||
-         current.method !== saved.method ||
-         JSON.stringify(current.body || null) !== JSON.stringify(saved.body || null) ||
-         JSON.stringify(current.headers || {}) !== JSON.stringify(saved.headers || {}) ||
-         JSON.stringify(current.params || {}) !== JSON.stringify(saved.params || {});
-}
+  private hasDeepChanges(current: ApiRequest, saved: ApiRequest): boolean {
+    return (
+      current.name !== saved.name ||
+      current.url !== saved.url ||
+      current.method !== saved.method ||
+      JSON.stringify(current.body || null) !== JSON.stringify(saved.body || null) ||
+      JSON.stringify(current.headers || {}) !== JSON.stringify(saved.headers || {}) ||
+      JSON.stringify(current.params || {}) !== JSON.stringify(saved.params || {})
+    );
+  }
 
   onFieldChange(tabId: string, changes: Partial<ApiRequest>) {
     this.tabsService.updateTabContent(tabId, changes);

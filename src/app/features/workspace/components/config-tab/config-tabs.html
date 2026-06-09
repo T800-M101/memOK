@@ -2,23 +2,59 @@
   <mat-tab label="Params">
     <div class="tab-content">
       <table class="params-table">
-        <thead><tr><th>KEY</th><th>VALUE</th><th>DESCRIPTION</th></tr></thead>
+        <thead>
+          <tr>
+            <th>KEY</th>
+            <th>VALUE</th>
+            <th>DESCRIPTION</th>
+          </tr>
+        </thead>
         <tbody>
           <tr>
-            <td><input placeholder="page" (input)="onInput()" /></td>
-            <td><input placeholder="1"  (input)="onInput()"/></td>
-            <td><input placeholder="Pagination" (input)="onInput()" /></td>
+            <td>
+              <input #pKey placeholder="page" [value]="requestData()?.params?.['key'] || ''"
+                (input)="onParamsChange($event)" />
+            </td>
+            <td>
+              <input #pValue placeholder="1" [value]="requestData()?.params?.['value'] || ''"
+                (input)="onParamsChange($event)" />
+            </td>
+            <td>
+              <input #pDesc placeholder="Pagination" [value]="requestData()?.params?.['description'] || ''"
+                (input)="onParamsChange($event)" />
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
   </mat-tab>
-  <mat-tab label="Headers"><div class="tab-content">Headers content</div></mat-tab>
+  <mat-tab label="Headers">
+    <div class="tab-content">
+      <table class="params-table">
+        <thead>
+          <tr>
+            <th>KEY</th>
+            <th>VALUE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input placeholder="Content-Type" (input)="onHeadersChange($event)" />
+            </td>
+            <td>
+              <input placeholder="application/json" (input)="onHeadersChange($event)" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </mat-tab>
   <mat-tab label="Authorization">
     <div class="tab-content">
       <mat-form-field appearance="outline" class="url-field">
         <mat-label>Bearer Token</mat-label>
-        <input matInput placeholder="your-token" />
+        <input matInput #authToken placeholder="your-token" (input)="onAuthTokenChange(authToken.value)" />
       </mat-form-field>
     </div>
   </mat-tab>
@@ -26,7 +62,7 @@
     <div class="tab-content">
       <mat-form-field appearance="outline" class="body-editor">
         <mat-label>JSON Body</mat-label>
-        <textarea matInput rows="12" placeholder="JSON body" (input)="onInput()" ></textarea>
+        <textarea matInput rows="12" placeholder="JSON body" (input)="onBodyInput($event)"></textarea>
       </mat-form-field>
     </div>
   </mat-tab>

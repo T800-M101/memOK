@@ -6,8 +6,8 @@ export interface ApiRequest {
   method: HttpMethod;
   name: string;
   url?: string;
-  params?: Record<string, string>;
-  headers?: Record<string, string>;
+  params?: Record<string, string> | null; 
+  headers?: Record<string, string> | null;
   body?: any;
   auth?: {
     type: 'bearer' | 'basic' | 'none';
